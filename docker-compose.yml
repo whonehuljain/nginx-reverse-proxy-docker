@@ -10,7 +10,21 @@ services:
       - "8001"
     networks:
       - system-c-network
-
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:8001/ping",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+      
   service-2:
     build:
       context: ./service_2
@@ -20,9 +34,25 @@ services:
       - "8002"
     networks:
       - system-c-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:8002/ping",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
 
   nginx:
-    build: ./nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     container_name: nginx-reverse-proxy
     ports:
       - "8000:8000"
@@ -31,6 +61,20 @@ services:
       - service-2
     networks:
       - system-c-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:8000/nginx-health",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
 
 networks:
   system-c-network:
