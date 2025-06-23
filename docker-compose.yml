@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   service-1:
     build:
@@ -62,7 +60,7 @@ services:
     networks:
       - system-c-network
     volumes:
-      - logs:/var/log/nginx
+      - ./logs:/var/log/nginx
     healthcheck:
       test:
         [
