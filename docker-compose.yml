@@ -61,6 +61,8 @@ services:
       - service-2
     networks:
       - system-c-network
+    volumes:
+      - logs:/var/log/nginx
     healthcheck:
       test:
         [
