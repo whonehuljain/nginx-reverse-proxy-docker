@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  service-1:
+    build:
+      context: ./service_1
+      dockerfile: Dockerfile
+    container_name: service-1
+    expose:
+      - "8001"
+    networks:
+      - system-c-network
+
+  service-2:
+    build:
+      context: ./service_2
+      dockerfile: Dockerfile
+    container_name: service-2
+    expose:
+      - "8002"
+    networks:
+      - system-c-network
+
+  nginx:
+    build: ./nginx
+    container_name: nginx-reverse-proxy
+    ports:
+      - "8000:8000"
+    depends_on:
+      - service-1
+      - service-2
+    networks:
+      - system-c-network
+
+networks:
+  system-c-network:
+    driver: bridge
