@@ -87,9 +87,11 @@ This script checks:
 
 ---
 
-## ❤ Health Checks
+## Bonus Tasks
 
-Each container has a health check configured to ensure the service is running and responsive.
+- Healthchecks: Each container has a health check configured to ensure the service is running and responsive.
+- Test Script: Added a test.sh script file that automatically tests the system.
+- Clear Logging: Added a custom log format for Nginx to provide clear and structured logs.
 
 ---
 
